@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Signup = (props) => {
-  const { signUser, setSignUser } = useState('');
-  const { signPassword, setSignPassword } = useState('');
+  const [signUser, setSignUser] = useState('');
+  const [signPassword, setSignPassword] = useState('');
 
-  let url = 'http://localhost:3000';
+  let url = 'http://localhost:3000/user/signup';
   function signup(userInfo) {
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ signUser: signUser, signPassword: signPassword }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: signUser, password: signPassword }),
     })
       .then((response) => response.json())
-      .then((response) => console.log(response));
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -25,7 +29,9 @@ const Signup = (props) => {
           <input
             id='username-signup'
             type='text'
-            onChange={(e) => setSignUser(e.target.value)}
+            onChange={(e) => {
+              setSignUser(e.target.value);
+            }}
           />
         </label>
         <label id='signup-password'>
@@ -33,7 +39,9 @@ const Signup = (props) => {
           <input
             id='password-signup'
             type='password'
-            onChange={(e) => setSignPassword(e.target.value)}
+            onChange={(e) => {
+              setSignPassword(e.target.value);
+            }}
           />
         </label>
         <button

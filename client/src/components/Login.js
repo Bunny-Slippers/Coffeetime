@@ -8,15 +8,24 @@ const Login = (props) => {
   let url = 'http://localhost:3000/user/login';
 
   async function login() {
-    const response = await fetch(url, {
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ username: user, password: password }),
+    // });
+    // let result = await response.json();
+    // console.log(result);
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username: user, password: password }),
-    });
-    let result = await response.json();
-    console.log(result);
+    })
+      .then((response) => console.log(response.json()))
+      .catch((err) => console.log(err));
   }
 
   return (
