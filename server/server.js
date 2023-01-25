@@ -11,12 +11,14 @@ const io = new Server(http, {});
 const morgan = require("morgan");
 const { log } = require("mercedLogger");
 const cors = require("cors");
-const userRouter = require("./controllers/userController");
+const userRouter = require("./controllers/userRoute");
+const cookieParser = require("cookie-parser");
 
 // ⬇️⬇️⬇️⬇️⬇️⬇️⬇️ Justin/Auth Stuff ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
+app.use(cookieParser());
 
 // ROUTES AND ROUTES
 
