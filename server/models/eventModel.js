@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
+//db username: coffeeapp password: codesmith
+
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 
 const EventSchema = new mongoose.Schema({
   host: {
@@ -10,7 +12,7 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  eventTime: { type: String},
+  eventTime: { type: String },
   details: {
     title: { type: String, required: true },
     // date: { type: Date, required: true },
@@ -19,14 +21,15 @@ const EventSchema = new mongoose.Schema({
   },
 });
 
-const Event = mongoose.model('Event', EventSchema);
+const Event = mongoose.model("Event", EventSchema);
 
-
-main().catch((err) => console.log(err));
+main()
+  .then(() => console.log("db connected"))
+  .catch((err) => console.log(err));
 
 async function main() {
   await mongoose.connect(
-    'mongodb+srv://francois:MN7s20IhEKCnNudZ@cluster0.mntpk3e.mongodb.net/?retryWrites=true&w=majority'
+    "mongodb+srv://coffeeapp:codesmith@cluster0.uvxqper.mongodb.net/?retryWrites=true&w=majority"
   );
 }
 
