@@ -13,7 +13,7 @@ mongoose.connect = mongoose.connect(DATABASE_URL, {
 
 // CONNECTION EVENTS
 mongoose.connection
-  .on("open", () => log.green("DATABASE STATE", "Connection Open"))
+  .on("open", () => log.cyan("DATABASE STATE", "Connection Open"))
   .on("close", () => log.magenta("DATABASE STATE", "Connection Open"))
   .on("error", (error) => log.red("DATABASE STATE", error));
 

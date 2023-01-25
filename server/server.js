@@ -55,6 +55,12 @@ io.on("connection", (socket) => {
   });
 });
 
+app.use(function (err, req, res, next) {
+  res
+    .status(err.status || 500)
+    .send({ message: err.message, status: err.status });
+});
+
 http.listen(3000, () => {
   console.log("listening on 3000");
 });
