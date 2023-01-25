@@ -4,11 +4,14 @@
 const mongoose = require("../db/db");
 mongoose.set("strictQuery", false);
 
+//const User = require("./userModel.js");
+
 const EventSchema = new mongoose.Schema({
   host: {
-    type: String,
-    required: true,
+    type: mongoose.ObjectId,
+    ref: "User",
   },
+  join: [{ userName: String }],
   created: {
     type: Date,
     required: true,
@@ -21,7 +24,8 @@ const EventSchema = new mongoose.Schema({
     attendees: Array,
   },
 });
-
+/*click join- client will send userName and event id, server 
+will go to datatbase, find event with id, add userName to join.*/
 
 const Event = mongoose.model("Event", EventSchema);
 
