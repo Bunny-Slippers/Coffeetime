@@ -1,14 +1,14 @@
-const { Router } = require("express");
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const { Router } = require('express');
+const User = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const userRouter = Router();
 
-const SECRET = "BRUH";
+const SECRET = 'BRUH';
 
 // 🆕🆕🆕🆕🆕 SIGNUP ROUTE 🆕🆕🆕🆕🆕🆕🆕🆕🆕
-userRouter.post("/signup", async (req, res) => {
+userRouter.post('/signup', async (req, res) => {
   try {
     // hashes password
     req.body.password = await bcrypt.hash(req.body.password, 10);
@@ -23,7 +23,8 @@ userRouter.post("/signup", async (req, res) => {
 
 // 🆗🆗🆗🆗🆗🆗 LOGIN ROUTE 🆗🆗🆗🆗🆗🆗🆗🆗
 
-userRouter.post("/login", async (req, res) => {
+userRouter.post('/login', async (req, res) => {
+  console.log(req.body);
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
@@ -35,10 +36,10 @@ userRouter.post("/login", async (req, res) => {
         const token = await jwt.sign({ username: user.username }, SECRET);
         res.json({ token });
       } else {
-        res.status(400).json({ error: "password doesnt match pal" });
+        res.status(400).json({ error: 'password doesnt match pal' });
       }
     } else {
-      res.status(400).json({ error: "User doesnt exist, pal" });
+      res.status(400).json({ error: 'User doesnt exist, pal' });
     }
   } catch (error) {
     res.status(400).json({ error });

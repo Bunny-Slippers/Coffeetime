@@ -5,14 +5,18 @@ const Login = (props) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
-  let url = 'http://localhost:3000';
+  let url = 'http://localhost:3000/user/login';
 
-  async function login(data) {
+  async function login() {
     const response = await fetch(url, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ username: user, password: password }),
     });
-    return response.json();
+    let result = await response.json();
+    console.log(result);
   }
 
   return (
@@ -24,7 +28,9 @@ const Login = (props) => {
           <input
             id='username-input'
             type='text'
-            onChange={(e) => setUser(e.target.value)}
+            onChange={(e) => {
+              setUser(e.target.value);
+            }}
           />
         </label>
         <label id='password'>
@@ -32,7 +38,9 @@ const Login = (props) => {
           <input
             id='password-input'
             type='password'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </label>
         <button
