@@ -10,7 +10,7 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  eventTime: { type: String},
+  eventTime: { type: String },
   details: {
     title: { type: String, required: true },
     // date: { type: Date, required: true },
@@ -20,7 +20,6 @@ const EventSchema = new mongoose.Schema({
 });
 
 const Event = mongoose.model('Event', EventSchema);
-
 
 main().catch((err) => console.log(err));
 
