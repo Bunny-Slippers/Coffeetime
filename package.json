@@ -20,6 +20,7 @@
   "homepage": "https://github.com/StarNosedSmol/CoffeTime#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "css-loader": "^6.7.3",
     "dotenv": "^16.0.3",

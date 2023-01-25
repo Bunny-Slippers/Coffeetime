@@ -1,29 +1,12 @@
-const { Router } = require("express");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const userRouter = Router();
+const userController = {};
 
 const SECRET = "BRUH";
 
-// 🆕🆕🆕🆕🆕 SIGNUP ROUTE 🆕🆕🆕🆕🆕🆕🆕🆕🆕
-userRouter.post("/signup", async (req, res) => {
-  try {
-    // hashes password
-    req.body.password = await bcrypt.hash(req.body.password, 10);
-    // create new user
-    const user = await User.create(req.body);
-    // send new user as response
-    res.json(user);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
-});
-
-// 🆗🆗🆗🆗🆗🆗 LOGIN ROUTE 🆗🆗🆗🆗🆗🆗🆗🆗
-
-userRouter.post("/login", async (req, res) => {
+userController.login = async (req, res, next) => {
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
@@ -33,16 +16,36 @@ userRouter.post("/login", async (req, res) => {
       if (result) {
         // sign token and send it in response
         const token = await jwt.sign({ username: user.username }, SECRET);
-        res.json({ token });
+        res.cookie("access_token", token, {
+          httpOnly: true,
+        });
+        return next();
       } else {
-        res.status(400).json({ error: "password doesnt match pal" });
+        res.status(400).json({ error: "password doesn't match pal" });
       }
     } else {
-      res.status(400).json({ error: "User doesnt exist, pal" });
+      res.status(400).json({ error: "User doesn't exist, pal" });
     }
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "unknown error caught in userController.login" });
+  }
+};
+
+userController.signup = async (req, res, next) => {
+  try {
+    // hashes password
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+    // create new user
+    const user = await User.create(req.body);
+    // send new user as response
+    // res.json(user);
+    res.locals.user = user;
+    return next();
   } catch (error) {
     res.status(400).json({ error });
   }
-});
+};
 
-module.exports = userRouter;
+module.exports = userController;
