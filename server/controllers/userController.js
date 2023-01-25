@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userRouter = Router();
+const userController = {};
 
 const SECRET = 'BRUH';
 
@@ -34,7 +34,10 @@ userRouter.post('/login', async (req, res) => {
       if (result) {
         // sign token and send it in response
         const token = await jwt.sign({ username: user.username }, SECRET);
-        res.json({ token });
+        res.cookie("access_token", token, {
+          httpOnly: true,
+        });
+        return next();
       } else {
         res.status(400).json({ error: 'password doesnt match pal' });
       }
@@ -42,8 +45,25 @@ userRouter.post('/login', async (req, res) => {
       res.status(400).json({ error: 'User doesnt exist, pal' });
     }
   } catch (error) {
+    res
+      .status(400)
+      .json({ error: "unknown error caught in userController.login" });
+  }
+};
+
+userController.signup = async (req, res, next) => {
+  try {
+    // hashes password
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+    // create new user
+    const user = await User.create(req.body);
+    // send new user as response
+    // res.json(user);
+    res.locals.user = user;
+    return next();
+  } catch (error) {
     res.status(400).json({ error });
   }
-});
+};
 
-module.exports = userRouter;
+module.exports = userController;
