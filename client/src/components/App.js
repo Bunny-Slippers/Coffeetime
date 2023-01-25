@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CreateForm from './CreateForm';
 import EventsList from './EventsList';
 import Login from './Login';
+import Signup from './Signup';
+import Home from './Home';
+import About from './About';
 import { io } from 'socket.io-client';
 import pic from '../../public/logo.png';
 const socket = io();
@@ -10,20 +14,30 @@ const socket = io();
 
 //create App that passes down the instance of socket to its children. This stops us from opening multiple connections with the server.
 function App() {
+  // return (
+  //   <div id='App'>
+  //     <div id='header-container'>
+  //       <img id='mole-logo' src={pic}></img>
+  //       <h1 id='title'>COFFE TIME</h1>
+  //     </div>
+  //     <div className='container'>
+  //       <div className='wrapper'>
+  //         <CreateForm socket={socket} />
+  //         <Login />
+  //         <EventsList socket={socket} />
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div id='App'>
-      <div id='header-container'>
-        <img id='mole-logo' src={pic}></img>
-        <h1 id='title'>COFFE TIME</h1>
-      </div>
-      <div className='container'>
-        <div className='wrapper'>
-          <CreateForm socket={socket} />
-          <Login />
-          <EventsList socket={socket} />
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home socket={socket} />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/signup' element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

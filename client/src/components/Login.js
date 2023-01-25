@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
   const [user, setUser] = useState('');
@@ -31,7 +32,9 @@ const Login = (props) => {
           />
         </label>
         <button id='login-btn'>Log in</button>
-        <button id='signup-btn'>Sign up</button>
+        <Link to='/signup' id='signup-btn'>
+          Sign up
+        </Link>
       </form>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Signup = (props) => {
   const { signUser, setSignUser } = useState('');
@@ -13,6 +14,7 @@ const Signup = (props) => {
 
   return (
     <div id='signup-form'>
+      <Link to='/'>Home Page</Link>
       <h2>Please Signup</h2>
       <form id=''>
         <label id='signup-user'>
