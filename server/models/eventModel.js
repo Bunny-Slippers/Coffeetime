@@ -1,6 +1,7 @@
 //db username: coffeeapp password: codesmith
 
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+const mongoose = require("../db/db");
 mongoose.set("strictQuery", false);
 
 const EventSchema = new mongoose.Schema({
@@ -23,14 +24,14 @@ const EventSchema = new mongoose.Schema({
 
 const Event = mongoose.model("Event", EventSchema);
 
-main()
-  .then(() => console.log("db connected"))
-  .catch((err) => console.log(err));
+// main()
+//   .then(() => console.log("db connected"))
+//   .catch((err) => console.log(err));
 
-async function main() {
-  await mongoose.connect(
-    "mongodb+srv://coffeeapp:codesmith@cluster0.uvxqper.mongodb.net/?retryWrites=true&w=majority"
-  );
-}
+// async function main() {
+//   await mongoose.connect(
+//     "mongodb+srv://coffeeapp:codesmith@cluster0.uvxqper.mongodb.net/?retryWrites=true&w=majority"
+//   );
+// }
 
 module.exports = Event;
