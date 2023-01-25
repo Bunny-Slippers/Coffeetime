@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("../db/db");
 mongoose.set("strictQuery", false);
 
 const UserSchema = new mongoose.Schema({
@@ -6,6 +6,6 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-const User = mongoose.model("Event", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
