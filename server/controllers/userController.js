@@ -21,15 +21,22 @@ userController.login = async (req, res, next) => {
         });
         return next();
       } else {
-        res.status(400).json({ error: "password doesn't match pal" });
+        return next({
+          message: "password does not match!",
+          status: 400,
+        });
       }
     } else {
-      res.status(400).json({ error: "User doesn't exist, pal" });
+      return next({
+        message: "User does not exist!",
+        status: 400,
+      });
     }
   } catch (error) {
-    res
-      .status(400)
-      .json({ error: "unknown error caught in userController.login" });
+    return next({
+      message: error,
+      status: 400,
+    });
   }
 };
 
@@ -44,7 +51,10 @@ userController.signup = async (req, res, next) => {
     res.locals.user = user;
     return next();
   } catch (error) {
-    res.status(400).json({ error });
+    return next({
+      message: error,
+      status: 400,
+    });
   }
 };
 
