@@ -7,7 +7,10 @@ const Signup = (props) => {
 
   let url = 'http://localhost:3000';
   function signup(userInfo) {
-    fetch(url, { method: 'POST', body: JSON.stringify(userInfo) })
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ signUser: signUser, signPassword: signPassword }),
+    })
       .then((response) => response.json())
       .then((response) => console.log(response));
   }
@@ -33,7 +36,14 @@ const Signup = (props) => {
             onChange={(e) => setSignPassword(e.target.value)}
           />
         </label>
-        <button id='confirm-btn'>Confirm</button>
+        <button
+          id='confirm-btn'
+          onClick={(e) => {
+            signup(e);
+          }}
+        >
+          Confirm
+        </button>
       </form>
     </div>
   );

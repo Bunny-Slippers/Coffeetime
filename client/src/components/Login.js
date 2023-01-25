@@ -7,8 +7,12 @@ const Login = (props) => {
 
   let url = 'http://localhost:3000';
 
-  function login() {
-    fetch(url, { method: 'POST', body: JSON.stringify() });
+  async function login(data) {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ username: user, password: password }),
+    });
+    return response.json();
   }
 
   return (
@@ -31,7 +35,14 @@ const Login = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button id='login-btn'>Log in</button>
+        <button
+          id='login-btn'
+          onClick={(e) => {
+            login(e);
+          }}
+        >
+          Log in
+        </button>
         <Link to='/signup' id='signup-btn'>
           Sign up
         </Link>
