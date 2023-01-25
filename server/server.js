@@ -48,10 +48,12 @@ io.on("connection", (socket) => {
   socket.on("newEvent", (newEvent) => {
     console.log("incoming event is: ", newEvent);
     //create new event in database
-    Event.create(newEvent).then((data) => {
-      console.log("new Event is: ", newEvent);
-      io.emit("loadEvents", [newEvent]);
-    });
+    Event.create(newEvent)
+      .then((data) => {
+        console.log("new Event is: ", newEvent);
+        io.emit("loadEvents", [newEvent]);
+      })
+      .catch((err) => console.log(err));
   });
 });
 
