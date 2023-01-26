@@ -36,7 +36,6 @@ function EventsList(props) {
     //we emit an event of loadEvents to the server, which will query the DB and send back all events with the same event type of loadEvents
     props.socket.emit('initialLoad', 'testMessage');
     props.socket.on('initialLoad', (message) => {
-      console.log('recieved from server on initial load: ', message);
       parseInput(message);
     });
   }, []);
