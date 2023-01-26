@@ -1,13 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoggedIn: false,
-  user: { username: '' },
+  user: { username: "" },
   errorMessage: null,
   events: [],
   modalState: {
     open: false,
-    type: null,
     position: { top: 0, left: 0 },
     id: null,
   },
@@ -15,7 +14,7 @@ const initialState = {
 };
 
 const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState: initialState,
   reducers: {
     logIn: (state, action) => {
@@ -23,8 +22,20 @@ const globalSlice = createSlice({
       state.user.username = action.payload;
       state.errorMessage = null;
     },
-    showModal: (state, action) => {
-      state.showModal = true;
+    openModal: (state, action) => {
+      state.modalState.open = true;
+      state.modalState.position.left = action.payload.left;
+      state.modalState.position.top = action.payload.top;
+      state.modalState.id = action.payload.id;
+      state.modalState.value = action.payload.value;
+    },
+    closeModal: (state, action) => {
+      state.modalState = {
+        open: false,
+        position: { top: 0, left: 0 },
+        id: null,
+        value: [],
+      };
     },
     setError: (state, action) => {
       state.errorMessage = action.payload;
@@ -45,6 +56,13 @@ const globalSlice = createSlice({
     },
   },
 });
-export const { logIn, showModal, setError, eventsUpdate, syncEvent, addEvent } =
-  globalSlice.actions;
+export const {
+  logIn,
+  openModal,
+  closeModal,
+  setError,
+  eventsUpdate,
+  syncEvent,
+  addEvent,
+} = globalSlice.actions;
 export default globalSlice.reducer;
