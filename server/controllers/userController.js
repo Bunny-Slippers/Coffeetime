@@ -8,6 +8,7 @@ userController.login = async (req, res, next) => {
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
+    console.log(user);
     if (user) {
       console.log('USER' + user);
       // check if password matches
@@ -20,6 +21,7 @@ userController.login = async (req, res, next) => {
         res.cookie('access_token', token, {
           httpOnly: true,
         });
+        res.locals.user = { id: user._id, username: user.username };
         return next();
       } else {
         return next({
@@ -58,4 +60,18 @@ userController.signup = async (req, res, next) => {
     });
   }
 };
+
+userController.userAddEvent = async (req, res, next) => {
+  try {
+    let username = req.params.username;
+    let eventId = req.body.eventId;
+    let user = await User.findOne({ username });
+    let event = await Event.findById(eventId);
+    user.joinedEvents.push(event);
+    await user.save();
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 module.exports = userController;

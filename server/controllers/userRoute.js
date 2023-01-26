@@ -1,5 +1,6 @@
-const { Router } = require('express');
+const { Router, json } = require('express');
 const { login, signup } = require('./userController');
+const { joinEvent } = require('./eventController');
 
 const userRouter = Router();
 
@@ -13,8 +14,11 @@ userRouter.post('/signup', signup, (req, res) => {
 // 🆗🆗🆗🆗🆗🆗 LOGIN ROUTE 🆗🆗🆗🆗🆗🆗🆗🆗
 
 userRouter.post('/login', login, (req, res) => {
-  console.log('GGGGGGGG');
-  res.status(200).json('Login successfully 😍');
+  res.status(200).json(res.locals.user);
+});
+
+userRouter.patch('/join', joinEvent, (req, res) => {
+  res.send(200).json('joined event');
 });
 
 module.exports = userRouter;
