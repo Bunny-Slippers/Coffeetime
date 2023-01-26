@@ -5,10 +5,27 @@ const Login = (props) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
-  let url = 'http://localhost:3000';
+  let url = 'http://localhost:3000/user/login';
 
-  function login() {
-    fetch(url);
+  async function login() {
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ username: user, password: password }),
+    // });
+    // let result = await response.json();
+    // console.log(result);
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: user, password: password }),
+    })
+      .then((response) => console.log(response.json()))
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -20,7 +37,9 @@ const Login = (props) => {
           <input
             id='username-input'
             type='text'
-            onChange={(e) => setUser(e.target.value)}
+            onChange={(e) => {
+              setUser(e.target.value);
+            }}
           />
         </label>
         <label id='password'>
@@ -28,10 +47,19 @@ const Login = (props) => {
           <input
             id='password-input'
             type='password'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </label>
-        <button id='login-btn'>Log in</button>
+        <button
+          id='login-btn'
+          onClick={(e) => {
+            login(e);
+          }}
+        >
+          Log in
+        </button>
         <Link to='/signup' id='signup-btn'>
           Sign up
         </Link>
@@ -41,3 +69,5 @@ const Login = (props) => {
 };
 
 export default Login;
+
+//git fetch -v
