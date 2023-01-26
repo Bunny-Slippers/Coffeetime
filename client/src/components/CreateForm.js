@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TimePicker from 'react-time-picker';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { eventsInit, eventsUpdate, syncEvent } from '../redux/slice';
 
 function CreateForm(props) {
   //useState hooks that saves the input fields data automatically;
@@ -8,20 +9,24 @@ function CreateForm(props) {
   const [time, useTime] = useState('10:00');
   const isLoggedIn = useSelector((state) => state.global.isLoggedIn);
   const username = useSelector((state) => state.global.user.username);
+  const dispatch = useDispatch();
 
   // handle submit event handler that onlcick of the button, grab host and event and emit it to the backend
   const handleSubmit = (e) => {
     //stop page from refreshing and losing connection to socket
     e.preventDefault();
-    //send a newEvent type event to the backend, which knows to add this into the db.
-    props.socket.emit('newEvent', {
+    const newEvent = {
       host: username,
       created: new Date(),
       eventTime: time,
       details: { title: event },
+    };
+    //send a newEvent type event to the backend, which knows to add this into the db.
+    props.socket.emit('newEvent', newEvent);
+    props.socket.emit('sync', (message) => {
+      console.log(message);
+      dispatch(syncEvent(message));
     });
-    useHost('');
-    useEvent('');
   };
 
   function disableHandler(event) {

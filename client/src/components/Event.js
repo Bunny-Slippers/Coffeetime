@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { json } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { eventsUpdate } from '../redux/slice';
 
 //containers for individual events
 function Event(props) {
@@ -9,6 +11,8 @@ function Event(props) {
   let eventId = props._id;
   let username = props.host;
   let socket = props.socket;
+
+  const dispatch = useDispatch();
 
   if (Number(eventTime) > 12) {
     let replaceStr = (Number(eventTime) - 12).toString();
@@ -44,6 +48,9 @@ function Event(props) {
     console.log('PRESS');
     e.preventDefault();
     socket.emit('joinEvent', { username: username, eventId: eventId });
+    socket.on('updateEvent', (updatedEvent) => {
+      dispatch(eventsUpdate(updatedEvent));
+    });
   }
 
   return (
@@ -63,7 +70,7 @@ function Event(props) {
         >
           Join
         </button>
-        <div>{attendees.length} People Joined!</div>
+        <div id='number-joined'>{attendees.length} People Joined!</div>
       </div>
     </div>
   );

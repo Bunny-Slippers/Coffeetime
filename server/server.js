@@ -44,10 +44,10 @@ io.on('connection', (socket) => {
   // When connected, fetch the events
   // and send them to the frontend
 
-  socket.on('initialLoad', () => {
+  socket.on('sync', () => {
     Event.find({}).then((data) => {
-      initLoad = data;
-      io.emit('initialLoad', data);
+      console.log('ADDADADADDADDAD');
+      io.emit('sync', data);
     });
   });
   // listen to action 'newEvent',
@@ -56,8 +56,7 @@ io.on('connection', (socket) => {
     //create new event in database
     Event.create(newEvent)
       .then((data) => {
-        console.log('new Event is: ', newEvent);
-        io.emit('loadEvents', [newEvent]);
+        console.log('data in db');
       })
       .catch((err) => console.log(err));
   });
@@ -65,16 +64,17 @@ io.on('connection', (socket) => {
   socket.on('joinEvent', async (object) => {
     let eventId = object.eventId;
     let username = object.username;
-
     let event = await Event.findById(eventId);
 
     if (event.details.attendees.includes(username)) {
-      socket.emit('joinEvent', 'Joined already');
+      io.emit('joinEvent', 'Joined already');
+    } else {
+      event.details.attendees.push(username);
+      await event.save();
+      let newEvent = await Event.findById(eventId);
+      console.log(newEvent);
+      io.emit('updateEvent', newEvent);
     }
-    event.details.attendees.push(username);
-    await event.save();
-    let newEvent = await Event.find({});
-    io.emit('loadEvents', newEvent);
   });
 });
 
