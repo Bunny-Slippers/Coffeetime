@@ -21,6 +21,11 @@ function CreateForm(props) {
     useHost('');
     useEvent('');
   };
+  
+  function disableHandler(event) {
+    if (!event) {
+    }
+  }
 
   //onChange lets us dynamically grab the values in the form and send to state
   //handleSubmit will run when we submit and send the data back to db
@@ -41,12 +46,11 @@ function CreateForm(props) {
           <input
             id='event-input'
             type='text'
-            disabled={true}
-            value='Please Login'
+            disabled={false}
             onChange={(e) => {
               useEvent(e.target.value);
             }}
-            // value={event}
+            value='Please Log In'
           />
         </label>
         <div className='submitting'>

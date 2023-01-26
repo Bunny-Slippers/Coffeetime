@@ -2,30 +2,36 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = (props) => {
+  const { handleError, setLoggedIn } = props;
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
   let url = 'http://localhost:3000/user/login';
 
-  async function login() {
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ username: user, password: password }),
-    // });
-    // let result = await response.json();
-    // console.log(result);
+  function login(e) {
+    e.preventDefault();
     fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: user, password: password }),
     })
-      .then((response) => console.log(response.json()))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          let message = data.error.message;
+          console.log(handleError, message);
+          handleError(message);
+        } else {
+          setLoggedIn();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }
 
   return (
@@ -54,8 +60,8 @@ const Login = (props) => {
         </label>
         <button
           id='login-btn'
-          onClick={(e) => {
-            login(e);
+          onClick={(y) => {
+            login(y);
           }}
         >
           Log in

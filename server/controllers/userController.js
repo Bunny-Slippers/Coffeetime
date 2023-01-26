@@ -1,14 +1,19 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+
 const userController = {};
+
 const SECRET = 'BRUH';
+
 userController.login = async (req, res, next) => {
-  console.log(req.body);
+  console.log('GGGGGGGGGG');
+
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
-    console.log(user);
+    console.log('FOUND USER', user);
     if (user) {
       console.log('USER' + user);
       // check if password matches
