@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { json } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { eventsUpdate } from '../redux/slice';
 
@@ -9,8 +10,8 @@ function Event(props) {
   let eventCopy = props.eventTime;
   let attendees = props.attendees;
   let eventId = props._id;
-  let username = props.host;
   let socket = props.socket;
+  const username = useSelector((state) => state.global.user.username);
 
   const dispatch = useDispatch();
 
@@ -34,18 +35,7 @@ function Event(props) {
 
   let url = 'http://localhost:3000/user/join';
   function joinBtn(e) {
-    // Using fetch request
-    // fetch(url, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ username: username, eventId: eventId }),
-    // })
-    //   .then((response) => response.json())
-    //   .catch((err) => console.log(err));
-    // Using Websocket
-    console.log('PRESS');
+    console.log(username);
     e.preventDefault();
     socket.emit('joinEvent', { username: username, eventId: eventId });
     socket.on('updateEvent', (updatedEvent) => {

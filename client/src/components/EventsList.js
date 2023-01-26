@@ -27,37 +27,12 @@ function EventsList(props) {
   });
   let colorCounter = 0;
 
-  // const parseInput = (message) => {
-  //   colorCounter = 0;
-  //   const res = [];
-  //   if (Array.isArray(message)) {
-  //     for (const elem of message) {
-  //       if (!elem.eventTime) elem.eventTime = 'TBD';
-  //       if (colorCounter > 3) colorCounter = 0;
-  //       res.push(
-  //         <Event
-  //           socket={props.socket}
-  //           host={elem.host}
-  //           details={elem.details.title}
-  //           colorCounter={colorCounter}
-  //           eventTime={elem.eventTime}
-  //           key={elem.details.title}
-  //           user={props.user}
-  //           _id={elem._id}
-  //           attendees={elem.details.attendees}
-  //         />
-  //       );
-  //       setEvents([...events, ...res]);
-  //       colorCounter++;
-  //     }
-  //   }
-  // };
-
   //useEffect here is for loading events on the first load of the page (dependancy is [])
   useEffect(() => {
     //we emit an event of loadEvents to the server, which will query the DB and send back all events with the same event type of loadEvents
     props.socket.emit('sync', 'testMessage');
     props.socket.on('sync', (message) => {
+      console.log(events);
       dispatch(syncEvent(message));
     });
   }, []);

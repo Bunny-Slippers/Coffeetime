@@ -5,7 +5,6 @@ const eventController = {};
 eventController.joinEvent = async (req, res, next) => {
   let eventId = req.body.eventId;
   let username = req.body.username;
-  console.log(eventId, username);
   // let userId = req.body.userId;
   // let obj = { username, eventId };
   try {
