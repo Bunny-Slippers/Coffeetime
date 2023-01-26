@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
   const [signUser, setSignUser] = useState('');
   const [signPassword, setSignPassword] = useState('');
+  let navigate = useNavigate();
 
   let url = 'http://localhost:3000/user/signup';
   function signup(userInfo) {
@@ -17,6 +18,7 @@ const Signup = (props) => {
       .then((response) => response.json())
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
+    return navigate('/');
   }
 
   return (
