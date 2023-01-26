@@ -1,39 +1,39 @@
-const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const userController = {};
-const SECRET = 'BRUH';
+const SECRET = "BRUH";
 
 userController.login = async (req, res, next) => {
-  console.log('GGGGGGGGGG');
+  console.log("GGGGGGGGGG");
 
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
-    console.log('FOUND USER', user);
+    console.log("FOUND USER", user);
     if (user) {
-      console.log('USER' + user);
+      console.log("USER" + user);
       // check if password matches
       const result = await bcrypt.compare(req.body.password, user.password);
       if (result) {
-        console.log('RESULT' + result);
+        console.log("RESULT" + result);
 
         // sign token and send it in response
         const token = await jwt.sign({ username: user.username }, SECRET);
-        res.cookie('access_token', token, {
+        res.cookie("access_token", token, {
           httpOnly: true,
         });
         res.locals.user = { id: user._id, username: user.username };
         return next();
       } else {
         return next({
-          message: 'password does not match!',
+          message: "password does not match!",
           status: 400,
         });
       }
     } else {
       return next({
-        message: 'User does not exist!',
+        message: "User does not exist!",
         status: 400,
       });
     }
@@ -47,6 +47,11 @@ userController.login = async (req, res, next) => {
 userController.signup = async (req, res, next) => {
   console.log(req.body);
   try {
+    // check if user exists already
+    const userExists = await User.findOne({ username: req.body.username });
+    if (userExists) {
+      throw "User already exists!";
+    }
     // hashes password
     req.body.password = await bcrypt.hash(req.body.password, 10);
     console.log(req.body);
@@ -83,7 +88,7 @@ userController.authorization = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {
     return next({
-      message: 'error in authorization',
+      message: "error in authorization",
       status: 403,
     });
   }
@@ -93,7 +98,7 @@ userController.authorization = (req, res, next) => {
     return next();
   } catch {
     return next({
-      message: 'other authorization error',
+      message: "other authorization error",
       status: 403,
     });
   }
