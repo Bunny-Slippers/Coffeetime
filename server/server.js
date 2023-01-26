@@ -46,7 +46,6 @@ io.on('connection', (socket) => {
 
   socket.on('sync', () => {
     Event.find({}).then((data) => {
-      console.log('ADDADADADDADDAD');
       io.emit('sync', data);
     });
   });
@@ -65,8 +64,9 @@ io.on('connection', (socket) => {
     let eventId = object.eventId;
     let username = object.username;
     let event = await Event.findById(eventId);
-
+    console.log('USERNAME from server.js', username);
     if (event.details.attendees.includes(username)) {
+      console.log('JOINED from server.js');
       io.emit('joinEvent', 'Joined already');
     } else {
       event.details.attendees.push(username);
