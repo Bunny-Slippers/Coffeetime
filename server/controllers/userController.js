@@ -88,7 +88,7 @@ userController.authorization = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {
     return next({
-      message: "error in authorization",
+      message: "No cookies? No authorization.",
       status: 403,
     });
   }
