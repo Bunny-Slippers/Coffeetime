@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import EventsList from './EventsList';
-import CreateForm from './CreateForm';
-import Login from './Login';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import EventsList from "./EventsList";
+import CreateForm from "./CreateForm";
+import Login from "./Login";
 
 function Home(props) {
   const [error, setError] = useState(null);
@@ -19,13 +19,19 @@ function Home(props) {
 
   return (
     <div>
-      {error ? <p style={{ color: 'red' }}>{error}</p> : null}
-      <Link to='/about'>About Team</Link>
-      <CreateForm socket={props.socket} />
-      {!isLoggedIn ? (
-        <Login setLoggedIn={setLoggedIn} handleError={handleError} />
-      ) : null}
-      <EventsList socket={props.socket} />
+      {error ? <p style={{ color: "red" }}>{error}</p> : null}
+      <div class="home-container">
+        <div class="event-create-login-container">
+          <EventsList socket={props.socket} />
+          <div class="create-login-container">
+            <CreateForm socket={props.socket} />
+            {!isLoggedIn ? (
+              <Login setLoggedIn={setLoggedIn} handleError={handleError} />
+            ) : null}
+            <Link to="/about">About Team</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
