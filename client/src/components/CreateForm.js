@@ -21,10 +21,12 @@ function CreateForm(props) {
     useHost('');
     useEvent('');
   };
+  
   function disableHandler(event) {
     if (!event) {
     }
   }
+
   //onChange lets us dynamically grab the values in the form and send to state
   //handleSubmit will run when we submit and send the data back to db
 

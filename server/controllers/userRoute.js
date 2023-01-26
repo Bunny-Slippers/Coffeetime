@@ -14,7 +14,6 @@ userRouter.post('/signup', signup, (req, res) => {
 // 🆗🆗🆗🆗🆗🆗 LOGIN ROUTE 🆗🆗🆗🆗🆗🆗🆗🆗
 
 userRouter.post('/login', login, (req, res) => {
-  console.log('cookie ', res.cookie);
   res.status(200).json(res.locals.user);
 });
 

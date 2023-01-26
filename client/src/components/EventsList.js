@@ -8,6 +8,7 @@ function EventsList(props) {
     colorCounter = 0;
     const res = [];
     if (Array.isArray(message)) {
+      console.log(message);
       for (const elem of message) {
         if (!elem.eventTime) elem.eventTime = 'TBD';
         if (colorCounter > 3) colorCounter = 0;
@@ -18,6 +19,8 @@ function EventsList(props) {
             colorCounter={colorCounter}
             eventTime={elem.eventTime}
             key={elem.details.title}
+            user={props.user}
+            _id={elem._id}
           />
         );
         setEvents([...events, ...res]);
@@ -33,7 +36,6 @@ function EventsList(props) {
     //we emit an event of loadEvents to the server, which will query the DB and send back all events with the same event type of loadEvents
     props.socket.emit('initialLoad', 'testMessage');
     props.socket.on('initialLoad', (message) => {
-      // console.log('recieved from server on initial load: ', message)
       parseInput(message);
     });
   }, []);

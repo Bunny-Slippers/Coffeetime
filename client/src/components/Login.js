@@ -31,6 +31,7 @@ const Login = (props) => {
       .catch((err) => {
         console.log(err);
       });
+
   }
 
   return (
@@ -42,7 +43,9 @@ const Login = (props) => {
           <input
             id='username-input'
             type='text'
-            onChange={(e) => setUser(e.target.value)}
+            onChange={(e) => {
+              setUser(e.target.value);
+            }}
           />
         </label>
         <label id='password'>
@@ -50,7 +53,9 @@ const Login = (props) => {
           <input
             id='password-input'
             type='password'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </label>
         <button
@@ -70,3 +75,5 @@ const Login = (props) => {
 };
 
 export default Login;
+
+//git fetch -v
