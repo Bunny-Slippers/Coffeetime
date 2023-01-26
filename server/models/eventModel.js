@@ -7,10 +7,7 @@ mongoose.set("strictQuery", false);
 //const User = require("./userModel.js");
 
 const EventSchema = new mongoose.Schema({
-  host: {
-    type: mongoose.ObjectId,
-    ref: "User",
-  },
+  host: String,
   join: [{ userName: String }],
   created: {
     type: Date,
