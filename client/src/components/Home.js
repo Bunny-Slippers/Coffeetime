@@ -3,23 +3,20 @@ import { Link } from "react-router-dom";
 import EventsList from "./EventsList";
 import CreateForm from "./CreateForm";
 import Login from "./Login";
+<<<<<<< HEAD
+=======
+import { useSelector, useDispatch } from "react-redux";
+>>>>>>> dev
 
 function Home(props) {
-  const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  function handleError(msg) {
-    console.log(msg);
-    setError(msg);
-  }
-
-  function setLoggedIn() {
-    setIsLoggedIn(true);
-  }
+  let isLoggedIn = useSelector((state) => state.global.isLoggedIn);
+  let error = useSelector((state) => state.global.errorMessage);
+  let user = useSelector((state) => state.global.user);
 
   return (
     <div>
       {error ? <p style={{ color: "red" }}>{error}</p> : null}
+<<<<<<< HEAD
       <div class="home-container">
         <div class="event-create-login-container">
           <EventsList socket={props.socket} />
@@ -32,6 +29,12 @@ function Home(props) {
           </div>
         </div>
       </div>
+=======
+      <Link to="/about">About Team</Link>
+      <CreateForm socket={props.socket} />
+      {!isLoggedIn ? <Login /> : <p>Welcome {user.username}</p>}
+      <EventsList socket={props.socket} />
+>>>>>>> dev
     </div>
   );
 }

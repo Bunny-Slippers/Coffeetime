@@ -14,22 +14,6 @@ const socket = io();
 
 //create App that passes down the instance of socket to its children. This stops us from opening multiple connections with the server.
 function App() {
-  // return (
-  //   <div id='App'>
-  //     <div id='header-container'>
-  //       <img id='mole-logo' src={pic}></img>
-  //       <h1 id='title'>COFFE TIME</h1>
-  //     </div>
-  //     <div className='container'>
-  //       <div className='wrapper'>
-  //         <CreateForm socket={socket} />
-  //         <Login />
-  //         <EventsList socket={socket} />
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <BrowserRouter>
       <Routes>

@@ -1,10 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-
 const userController = {};
-
 const SECRET = 'BRUH';
 
 userController.login = async (req, res, next) => {
@@ -52,6 +49,7 @@ userController.signup = async (req, res, next) => {
   try {
     // hashes password
     req.body.password = await bcrypt.hash(req.body.password, 10);
+    console.log(req.body);
     // create new user
     const user = await User.create(req.body);
     // send new user as response
@@ -76,6 +74,28 @@ userController.userAddEvent = async (req, res, next) => {
     await user.save();
   } catch (err) {
     res.status(400).json(err);
+  }
+};
+
+// Authorizes user
+
+userController.authorization = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return next({
+      message: 'error in authorization',
+      status: 403,
+    });
+  }
+  try {
+    const data = jwt.verify(token, SECRET);
+    req.username = data.username;
+    return next();
+  } catch {
+    return next({
+      message: 'other authorization error',
+      status: 403,
+    });
   }
 };
 

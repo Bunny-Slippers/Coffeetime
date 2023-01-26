@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
+=======
+import { useSelector, useDispatch } from "react-redux";
+import { logIn, setError } from "../redux/slice";
+>>>>>>> dev
 
 const Login = (props) => {
   const { handleError, setLoggedIn } = props;
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
+=======
+  const dispatch = useDispatch();
+>>>>>>> dev
 
   let url = "http://localhost:3000/user/login";
 
@@ -22,10 +31,10 @@ const Login = (props) => {
         console.log(data);
         if (data.error) {
           let message = data.error.message;
-          console.log(handleError, message);
-          handleError(message);
+          dispatch(setError(message));
         } else {
-          setLoggedIn();
+          console.log(data);
+          dispatch(logIn(data.username));
         }
       })
       .catch((err) => {

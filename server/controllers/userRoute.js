@@ -18,7 +18,7 @@ userRouter.post('/login', login, (req, res) => {
 });
 
 userRouter.patch('/join', joinEvent, (req, res) => {
-  res.send(200).json('joined event');
+  res.status(200).json('joined event');
 });
 
 module.exports = userRouter;
