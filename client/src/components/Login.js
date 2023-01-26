@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import { useSelector, useDispatch } from "react-redux";
 import { logIn, setError } from "../redux/slice";
->>>>>>> dev
 
 const Login = (props) => {
   const { handleError, setLoggedIn } = props;
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
-=======
+
   const dispatch = useDispatch();
->>>>>>> dev
 
   let url = "http://localhost:3000/user/login";
 

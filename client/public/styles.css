@@ -82,7 +82,6 @@ p, h1, h2, h3, h4, h5, h6 {
   padding: 24px 24px 32px;
   max-width: 560px;
   width: 100%;
-  
 }
 
 @media only screen and (min-width: 600px) {
