@@ -13,10 +13,19 @@ function Home(props) {
   return (
     <div>
       {error ? <p style={{ color: "red" }}>{error}</p> : null}
-      <Link to="/about">About Team</Link>
-      <CreateForm socket={props.socket} />
-      {!isLoggedIn ? <Login /> : <p>Welcome {user.username}</p>}
-      <EventsList socket={props.socket} />
+
+      <div class="home-container">
+        <div class="event-create-login-container">
+          <EventsList socket={props.socket} />
+          <div class="create-login-container">
+            <CreateForm socket={props.socket} />
+            {!isLoggedIn ? (
+              <Login setLoggedIn={setLoggedIn} handleError={handleError} />
+            ) : null}
+            <Link to="/about">About Team</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
