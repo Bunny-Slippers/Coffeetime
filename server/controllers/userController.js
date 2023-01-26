@@ -1,36 +1,37 @@
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const User = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const userController = {};
 
-const SECRET = "BRUH";
+const SECRET = 'BRUH';
 
 userController.login = async (req, res, next) => {
+  console.log('GGGGGGGGGG');
   try {
     // check if user exists first
     const user = await User.findOne({ username: req.body.username });
-    console.log(user);
+    console.log('FOUND USER', user);
     if (user) {
       // check if password matches
       const result = await bcrypt.compare(req.body.password, user.password);
       if (result) {
         // sign token and send it in response
         const token = await jwt.sign({ username: user.username }, SECRET);
-        res.cookie("access_token", token, {
-          httpOnly: true,
+        res.cookie('access_token', token, {
+          httpOnly: false,
         });
         res.locals.user = { id: user._id, username: user.username };
         return next();
       } else {
         return next({
-          message: "password does not match!",
+          message: 'password does not match!',
           status: 400,
         });
       }
     } else {
       return next({
-        message: "User does not exist!",
+        message: 'User does not exist!',
         status: 400,
       });
     }

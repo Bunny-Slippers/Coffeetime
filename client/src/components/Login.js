@@ -2,13 +2,35 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = (props) => {
+  const { handleError, setLoggedIn } = props;
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
-  let url = 'http://localhost:3000';
+  let url = 'http://localhost:3000/user/login';
 
-  function login() {
-    fetch(url);
+  function login(e) {
+    e.preventDefault();
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user, password: password }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          let message = data.error.message;
+          console.log(handleError, message);
+          handleError(message);
+        } else {
+          setLoggedIn();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -31,7 +53,14 @@ const Login = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button id='login-btn'>Log in</button>
+        <button
+          id='login-btn'
+          onClick={(y) => {
+            login(y);
+          }}
+        >
+          Log in
+        </button>
         <Link to='/signup' id='signup-btn'>
           Sign up
         </Link>
