@@ -13,6 +13,7 @@ const { log } = require("mercedLogger");
 const cors = require("cors");
 const userRouter = require("./controllers/userRoute");
 const cookieParser = require("cookie-parser");
+const userController = require("./controllers/userController");
 
 // ⬇️⬇️⬇️⬇️⬇️⬇️⬇️ Justin/Auth Stuff ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 app.use(cors());
@@ -23,6 +24,11 @@ app.use(cookieParser());
 // ROUTES AND ROUTES
 
 app.use("/user", userRouter);
+
+// allows user to be authorized
+app.get("/protected", userController.authorization, (req, res) => {
+  return res.json({ user: { username: req.username } });
+});
 
 // ⬇️⬇️⬇️⬇️⬇️ WEBSOCKET SHIT ⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 let initLoad;
